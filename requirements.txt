@@ -1,0 +1,11 @@
+streamlit
+langchain_groq
+langchain_community
+langchain_core
+langchain_huggingface
+langchain
+huggingface-hub
+FAISS
+python-dotenv
+reportlab
+pymupdf
