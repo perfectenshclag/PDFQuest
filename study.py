@@ -108,6 +108,7 @@ def convert_pdf_to_text(pdf_bytes):
 def create_vector_embedding(uploaded_files):
     if "vectors" not in st.session_state:
         st.session_state.embeddings = embeddings
+        docs = []  # Initialize docs list here
         with st.spinner("🔄 Processing PDFs and creating embeddings..."):
             for uploaded_file in uploaded_files:
                 pdf_text = convert_pdf_to_text(uploaded_file.read())
@@ -115,22 +116,15 @@ def create_vector_embedding(uploaded_files):
                     page_content=pdf_text, 
                     metadata={"source": uploaded_file.name}  # Store PDF name here
                 )
-                docs.append(doc)
-        docs = []
-        for uploaded_file in uploaded_files:
-            pdf_text = convert_pdf_to_text(uploaded_file.read())
-            doc = Document(
-                page_content=pdf_text, 
-                metadata={"source": uploaded_file.name}  # Store PDF name here
-            )
-            docs.append(doc)
-        
+                docs.append(doc)  # Now this will work correctly
+
         # Split and embed documents
         st.session_state.text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=1000)
         st.session_state.final_documents = st.session_state.text_splitter.split_documents(docs)
         
         # Create vector store
         st.session_state.vectors = FAISS.from_documents(st.session_state.final_documents, st.session_state.embeddings)
+
 
 st.title("📚 RAG Application for Answer Retrieval")
 
