@@ -131,7 +131,7 @@ st.title("📚 RAG Application for Answer Retrieval")
 # Upload multiple PDF files
 uploaded_files = st.file_uploader("📁 Upload multiple PDFs", type="pdf", accept_multiple_files=True)
 
-user_prompt = st.text_input("🔍 Enter your query from the research paper")
+user_prompt = st.text_input("🔍 Enter your query")
 
 # Initialize vector database if user clicks the button
 if st.button("🔄 Create Document Embeddings") and uploaded_files:

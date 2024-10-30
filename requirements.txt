@@ -9,3 +9,4 @@ faiss-cpu
 python-dotenv
 reportlab
 pymupdf
+torch
