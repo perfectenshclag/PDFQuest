@@ -129,30 +129,29 @@ def create_vector_embedding(uploaded_files):
 st.title("📚 RAG Application for Answer Retrieval")
 
 # Upload multiple PDF files
+# Upload multiple PDF files
 uploaded_files = st.file_uploader("📁 Upload multiple PDFs", type="pdf", accept_multiple_files=True)
 
-user_prompt = st.text_input("🔍 Enter your query")
-
-# Initialize vector database if user clicks the button
-if st.button("🔄 Create Document Embeddings") and uploaded_files:
+# Initialize the vector database when files are uploaded
+if uploaded_files:
     create_vector_embedding(uploaded_files)
     st.write("✅ Vector Database is ready!")
+
+# User query input
+user_prompt = st.text_input("🔍 Enter your query from the research paper")
 
 if user_prompt and "vectors" in st.session_state:
     # Chain setup for question-answering with retrieved context
     document_chain = create_stuff_documents_chain(llm, prompt)
     retriever = st.session_state.vectors.as_retriever()
     retrieval_chain = create_retrieval_chain(retriever, document_chain)
+    
     with st.spinner("💡 Generating answer..."):
         start = time.process_time()
         response = retrieval_chain.invoke({'input': user_prompt})
         st.write(f"⏱️ Response time: {time.process_time() - start:.2f} seconds")
 
     # Retrieve answer
-    start = time.process_time()
-    response = retrieval_chain.invoke({'input': user_prompt})
-
-
     st.write("### 💡 Answer:")
     st.write(response['answer'])
 
