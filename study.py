@@ -138,7 +138,7 @@ if uploaded_files:
     st.write("✅ Vector Database is ready!")
 
 # User query input
-user_prompt = st.text_input("🔍 Enter your query from the research paper")
+user_prompt = st.text_input("🔍 Enter your query")
 
 if user_prompt and "vectors" in st.session_state:
     # Chain setup for question-answering with retrieved context
