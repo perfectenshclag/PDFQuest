@@ -27,26 +27,27 @@ os.environ['HF_TOKEN'] = os.getenv("HF_TOKEN")
 # Initialize embeddings and language model
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 llm = ChatGroq(groq_api_key=os.getenv("GROQ_API_KEY"), model_name="llama-3.2-90b-text-preview",max_tokens=4048)
-llm.temperature = 0.45
+llm.temperature = 0.2
 
 
 
 # Prompt setup for generating question papers
 prompt_template = """
     You are an expert who writes UPSC and other government exams paper answers based on the query and the provided context.
+ 
     Context: {context}
-    
     Instructions:
-    - Answer based on the context only. Do not add information that is not related to query and context
-    - Answer in format like an expert UPSC teacher
+    - Extract Answer from the  context only as it is authentic. Do not add information that is not related to query and context
+    - Answer in format like an expert UPSC teacher writes answer
     - Provide a detailed and precise explanation as if you are answering as a candidate.
-    - List associated topics related to the answer.
+    - List important crux points to remember.
     - Summarize the answer at the end.
     - For each part of the answer, specify the source name, page number, and reference details from the context in the end
-
+    Alert:
+    -If the context does not have the asked question clarify it clearly.
     Question: {input}
     """
-prompt = ChatPromptTemplate.from_template(prompt_template, kwargs=45)
+prompt = ChatPromptTemplate.from_template(prompt_template, kwargs=5)
 
 # Define PDF generation function with improved styling
 def create_pdf(answer_content):
@@ -69,7 +70,7 @@ def create_pdf(answer_content):
     elements = []
 
     # Add Title
-    title = "📄 Generated Question Paper Answer"
+    title = "📄 Generated Answer"
     elements.append(Paragraph(title, title_style))
     elements.append(Spacer(1, 0.2 * inch))
 
@@ -124,24 +125,19 @@ def create_vector_embedding(uploaded_files):
         
         # Create vector store
         st.session_state.vectors = FAISS.from_documents(st.session_state.final_documents, st.session_state.embeddings)
+        st.write("✅ Vector Database is ready!")
 
 
 st.title("📚 RAG Application for Answer Retrieval")
 
 # Upload multiple PDF files
 # Upload multiple PDF files
-uploaded_files = st.file_uploader("📁 Upload multiple PDFs", type="pdf", accept_multiple_files=True)
+uploaded_files = st.file_uploader("📁 Upload multiple PDFs", type="pdf", accept_multiple_files=True,)
 
-# Initialize the vector database when files are uploaded
-if uploaded_files:
-    create_vector_embedding(uploaded_files)
-    st.button("Document Embedding")
-    st.write("✅ Vector Database is ready!")
-
-# User query input
 user_prompt = st.text_input("🔍 Enter your query")
 
-if user_prompt and "vectors" in st.session_state:
+if st.button("Generate Response 🧙🏻") and "vectors" in st.session_state:
+
     # Chain setup for question-answering with retrieved context
     document_chain = create_stuff_documents_chain(llm, prompt)
     retriever = st.session_state.vectors.as_retriever()
@@ -164,3 +160,9 @@ if user_prompt and "vectors" in st.session_state:
         file_name="Answer.pdf",
         mime="application/pdf"
     )
+
+# Initialize the vector database when files are uploaded
+if uploaded_files:
+    create_vector_embedding(uploaded_files)
+
+# User query input
