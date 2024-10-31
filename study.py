@@ -38,7 +38,7 @@ prompt_template = """
     
     Instructions:
     - Answer based on the context only. Do not add information that is not related to query and context
-    - Answer like an expert UPSC student
+    - Answer in format like an expert UPSC teacher
     - Provide a detailed and precise explanation as if you are answering as a candidate.
     - List associated topics related to the answer.
     - Summarize the answer at the end.
