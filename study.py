@@ -26,7 +26,7 @@ os.environ['HF_TOKEN'] = os.getenv("HF_TOKEN")
 
 # Initialize embeddings and language model
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-llm = ChatGroq(groq_api_key=os.getenv("GROQ_API_KEY"), model_name="llama-3.2-90b-text-preview",max_tokens=2048)
+llm = ChatGroq(groq_api_key=os.getenv("GROQ_API_KEY"), model_name="llama-3.2-90b-text-preview",max_tokens=4048)
 llm.temperature = 0.45
 
 
@@ -39,7 +39,7 @@ prompt_template = """
     Instructions:
     - Answer based on the context only. Do not add information that is not related to query and context
     - Answer like an expert UPSC student
-    - Provide a detailed and lengthy explanation as if you are answering as a candidate.
+    - Provide a detailed and precise explanation as if you are answering as a candidate.
     - List associated topics related to the answer.
     - Summarize the answer at the end.
     - For each part of the answer, specify the source name, page number, and reference details from the context in the end
@@ -135,6 +135,7 @@ uploaded_files = st.file_uploader("📁 Upload multiple PDFs", type="pdf", accep
 # Initialize the vector database when files are uploaded
 if uploaded_files:
     create_vector_embedding(uploaded_files)
+    st.button("Document Embedding")
     st.write("✅ Vector Database is ready!")
 
 # User query input
