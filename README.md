@@ -3,6 +3,10 @@
 
 **pdfquest** is here to make studying smarter, not harder! Are you a student prepping for exams or a researcher deep-diving into stacks of PDFs? With **pdfquest**, you can focus on *just* the information you need, getting answers straight from your own notes, research papers, or study guides. No extra fluff, just the facts, right from your sources! 🌟
 
+## 🌐 Try pdfquest Live!
+
+Check out the live app here: [pdfquest on Streamlit](https://pdfquest.streamlit.app)
+
 ## 🎉 What is pdfquest?
 
 **pdfquest** is a question-answering app powered by **Retrieval-Augmented Generation (RAG)**. It digs through your PDF documents, pulls out only the relevant sections, and gives you concise, context-based answers. It’s like a search engine, but for your own study material—perfect for tackling exam prep and research projects!
