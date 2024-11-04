@@ -111,7 +111,7 @@ def create_vector_embedding(uploaded_files):
         st.session_state.vectors = FAISS.from_documents(st.session_state.final_documents, st.session_state.embeddings)
 
 # Main app title
-st.title("📚 RAG Application for Answer Retrieval")
+st.title("📚 RAG Application For Context Specific Query")
 
 # Sidebar instructions
 with st.sidebar:
