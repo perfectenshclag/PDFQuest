@@ -5,7 +5,7 @@
 
 ## 🌐 Try pdfquest Live!
 
-Check out the live app here: [pdfquest on Streamlit](https://pdfquest.streamlit.app)
+Check out the live app here: [pdfquest](https://pdfquest.streamlit.app)
 
 ## 🎉 What is pdfquest?
 
