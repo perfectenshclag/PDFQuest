@@ -26,7 +26,7 @@ os.environ['HF_TOKEN'] = os.getenv("HF_TOKEN")
 
 # Initialize embeddings and language model
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-llm = ChatGroq(groq_api_key=os.getenv("GROQ_API_KEY"), model_name="llama-3.2-90b-text-preview", max_tokens=2048)
+llm = ChatGroq(groq_api_key=os.getenv("GROQ_API_KEY"), model_name="llama3-70b-8192", max_tokens=2048)
 llm.temperature = 0.1
 
 
